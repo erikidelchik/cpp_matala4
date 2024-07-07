@@ -1,3 +1,6 @@
+//erikidelchik@gmail.com
+
+
 #include <QApplication>
 #include <QGraphicsView>
 #include <QGraphicsScene>
