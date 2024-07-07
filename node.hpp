@@ -1,3 +1,6 @@
+//erikidelchik@gmail.com
+
+
 #include "iostream"
 #include "vector"
 #include "complex.hpp"
