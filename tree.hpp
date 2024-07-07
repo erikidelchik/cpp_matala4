@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+
 #pragma once
 
 
@@ -364,14 +365,14 @@ namespace ariel{
 
             bfs_iterator node = tree.begin_bfs_scan();
 
-            TreeNode* treeRoot = new TreeNode(QString::number(node.get_value()));
+            TreeNode* treeRoot = new TreeNode(node.p_curr->toQString());
             scene->addItem(treeRoot);
 
 
             for (; node != tree.end_bfs_scan(); ++node){
 
                 for(Node<T>* child:node.p_curr->children){
-                    TreeNode* newNode = new TreeNode(QString::number(child->getValue()));
+                    TreeNode* newNode = new TreeNode((child->toQString()));
                     addTreeNode(scene,newNode,node.p_curr,child);
 
                 }
@@ -394,8 +395,8 @@ namespace ariel{
                 values.push_back(it1.p_curr->getValue());
             }
 
-            for(size_t i=0;i<values.size()-1;i++){
-                for(size_t j=0;j<values.size()-1-i;j++){
+            for(int i=0;i<values.size()-1;i++){
+                for(int j=0;j<values.size()-1-i;j++){
                     if(values[j]>values[j+1]){
                         T temp = values[j];
                         values[j] = values[j+1];
