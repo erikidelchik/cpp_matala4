@@ -97,7 +97,7 @@ namespace ariel{
 
         class iterator{
         public:
-            int curr;
+            size_t curr;
             vector<Node<T>*> order;
             Node<T>* p_curr;
 
@@ -109,8 +109,8 @@ namespace ariel{
 
             }
 
-            virtual iterator& operator++(){
-                if(curr<order.size()) {
+            iterator& operator++(){
+                if(curr<order.size()-1) {
                     curr++;
                     p_curr = order[curr];
                     return *this;
@@ -123,7 +123,7 @@ namespace ariel{
 
             const iterator operator++(int){
                 iterator temp = *this;
-                if(curr<order.size()) {
+                if(curr<order.size()-1) {
                     curr++;
                     p_curr = order[curr];
                     return temp;
@@ -135,15 +135,15 @@ namespace ariel{
                 }
             }
 
-            virtual bool operator==(const iterator& it) const{
+            bool operator==(const iterator& it) const{
                 return this->p_curr==it.p_curr;
             }
 
-            virtual bool operator!=(const iterator& it) const{
+            bool operator!=(const iterator& it) const{
                 return !(this->operator==(it));
             }
 
-            virtual T get_value(){
+            T get_value(){
                 return p_curr->getValue();
             }
 
@@ -212,7 +212,7 @@ namespace ariel{
                 }
             }
 
-        };//end in-order iterator class
+        };//end of in-order iterator class
 
         class post_order_iterator:public iterator{
         public:
@@ -239,7 +239,25 @@ namespace ariel{
                 }
             }
 
-        };//end post-order iterator class
+        };//end of post-order iterator class
+
+        class dfs_iterator:public iterator{
+        public:
+            explicit dfs_iterator(Node<T>* root):iterator(root){
+                if(root){
+                    set_dfs_order(root);
+                    this->p_curr = this->order[0];
+                }
+            }
+
+            void set_dfs_order(Node<T>* node){
+                for(Node<T>* child:node->children){
+                    set_dfs_order(child);
+                }
+                this->order.push_back(node);
+            }
+
+        };//end of dfs-iterator class
 
         class bfs_iterator{
         public:
@@ -308,37 +326,43 @@ namespace ariel{
                 return p_curr->getValue();
             }
 
-        };//end bfs iterator class
+        };//end of bfs iterator class
 
 
-        pre_order_iterator begin_pre_order(){
+        iterator begin_pre_order(){
             if(max_children==2)
                 return pre_order_iterator(root);
+            return begin_dfs_scan();
         }
 
-        pre_order_iterator end_pre_order(){
+        iterator end_pre_order(){
             if(max_children==2)
                 return pre_order_iterator(nullptr);
+            return end_dfs_scan();
         }
 
-        in_order_iterator begin_in_order(){
+        iterator begin_in_order(){
             if(max_children==2)
                 return in_order_iterator(root);
+            return begin_dfs_scan();
         }
 
-        in_order_iterator end_in_order(){
+        iterator end_in_order(){
             if(max_children==2)
                 return in_order_iterator(nullptr);
+            return end_dfs_scan();
         }
 
-        post_order_iterator begin_post_order(){
+        iterator begin_post_order(){
             if(max_children==2)
                 return post_order_iterator(root);
+            return begin_dfs_scan();
         }
 
-        post_order_iterator end_post_order(){
+        iterator end_post_order(){
             if(max_children==2)
                 return post_order_iterator(nullptr);
+            return end_dfs_scan();
         }
 
         bfs_iterator begin_bfs_scan(){
@@ -349,14 +373,12 @@ namespace ariel{
             return bfs_iterator(nullptr);
         }
 
-        in_order_iterator begin_dfs_scan(){
-            if(max_children==2)
-                return in_order_iterator(root);
+        iterator begin_dfs_scan(){
+            return dfs_iterator(root);
         }
 
-        in_order_iterator end_dfs_scan(){
-            if(max_children==2)
-                return in_order_iterator(nullptr);
+        iterator end_dfs_scan(){
+            return dfs_iterator(nullptr);
         }
 
         friend ostream& operator<<(ostream& os,Tree& tree){
