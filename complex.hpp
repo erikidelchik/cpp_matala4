@@ -1,5 +1,3 @@
-//erikidelchik@gmail.com
-
 #ifndef COMPLEX_HPP
 #define COMPLEX_HPP
 
@@ -30,12 +28,16 @@ public:
     bool operator>(Complex &other) const{
         return sqrt(this->real* this->real + this->imag* this->imag)>sqrt(other.real*other.real+other.imag*other.imag);
     }
-
-    QString toQString() const {
-        if (imag >= 0)
-            return QString("%1 + i%2").arg(real).arg(imag);
-        else
-            return QString("%1 - i%2").arg(real).arg(-imag);
+    
+    string toString() const {
+    	int r = real*10;
+    	int im = imag*10;
+    	if(imag>=0){
+    	    return to_string(r/10) +" + "+ to_string(im/10)+"i";
+    	}
+    	else
+            return to_string(r/10) +" - "+ to_string(im/10)+"i";
+    
     }
 
 

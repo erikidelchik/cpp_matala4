@@ -1,6 +1,3 @@
-//erikidelchik@gmail.com
-
-
 #include "iostream"
 #include "vector"
 #include "complex.hpp"
@@ -27,7 +24,7 @@ struct ToQString<std::string> {
 template<>
 struct ToQString<Complex>{
     static QString convert(const Complex& com){
-        return com.toQString();
+        return QString::fromStdString(com.toString());
     }
 };
 

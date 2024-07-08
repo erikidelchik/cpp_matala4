@@ -1,6 +1,3 @@
-//erikidelchik@gmail.com
-
-
 #include "iostream"
 #include "node.hpp"
 #include <queue>
@@ -420,8 +417,8 @@ namespace ariel{
                 values.push_back(it1.p_curr->getValue());
             }
 
-            for(int i=0;i<values.size()-1;i++){
-                for(int j=0;j<values.size()-1-i;j++){
+            for(size_t i=0;i<values.size()-1;i++){
+                for(size_t j=0;j<values.size()-1-i;j++){
                     if(values[j]>values[j+1]){
                         T temp = values[j];
                         values[j] = values[j+1];

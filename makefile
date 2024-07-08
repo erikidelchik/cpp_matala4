@@ -1,9 +1,21 @@
-tree: Makefile.project
-	$(MAKE) -f Makefile.project
+tree: Makefile.project1
+	$(MAKE) -f Makefile.project1
+	
+test: Makefile.project2
+	$(MAKE) -f Makefile.project2
 
-Makefile.project: project.pro
-	qmake project.pro -o Makefile.project
+Makefile.project2: project2.pro
+	qmake project2.pro -o Makefile.project2
+	
+Makefile.project1: project2.pro
+	qmake project2.pro -o Makefile.project2	
+
+Makefile.project1: project1.pro
+	qmake project1.pro -o Makefile.project1
+	
+Makefile.project1: project1.pro
+	qmake project1.pro -o Makefile.project1
 
 clean:
-	$(MAKE) -f Makefile.project clean
-	rm -f Makefile.project tree
+	
+	rm -f *.o Makefile.project1 Makefile.project2 tree test
